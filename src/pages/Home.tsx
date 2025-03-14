@@ -1,10 +1,21 @@
 import React from 'react';
 import { Box, Typography, Card, CardContent, useTheme, useMediaQuery } from '@mui/material';
+import { getUser, checkServiceStatus} from '../services/apiService';
 import ReactECharts from 'echarts-for-react';
 
 const Home = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const [serviceStatus, setServiceStatus] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const fetchServiceStatus = async () => {
+      const response = await checkServiceStatus();
+      setServiceStatus(response.message ?? null);
+    };
+    fetchServiceStatus();
+  }, []);
 
   // Line Chart Configuration
   const lineChartOptions: echarts.EChartsOption = {
@@ -77,6 +88,9 @@ const Home = () => {
     >
       <Typography variant="h3" fontWeight="bold" textAlign="center" sx={{ mb: 3 }}>
         Dashboard
+      </Typography>
+      <Typography variant="h3" fontWeight="bold" textAlign="center" sx={{ mb: 3 }}>
+        {serviceStatus ? serviceStatus : 'Loading...'}
       </Typography>
 
       {/* Line Chart Card */}

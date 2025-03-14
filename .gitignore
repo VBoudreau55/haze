@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+#python keys
+keys.py
+*.pyc
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
