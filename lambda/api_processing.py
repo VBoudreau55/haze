@@ -6,6 +6,7 @@ import io
 from datetime import datetime
 
 from keys import Nasa_API_Key
+from keys import OPEN_AQ_API_KEY
 
 class ApiProcessing:
     def __init__(self):
@@ -17,10 +18,10 @@ class ApiProcessing:
         return "api processing"
 
     def get_country(self, country_id):
-        #country = pycountry.countries.get(alpha_3=country_id)
-        #openaq_code = country.alpha_2
+        country = pycountry.countries.get(alpha_3=country_id)
+        openaq_code = country.alpha_2
         output = {}
-        output['who'] = self.process_who_api(country_id)
+        output['oaq'] = self.process_oaq_api(openaq_code)
         #output['nasa'] = self.process_nasa_api(country_id)
 
         # Logic for processing
@@ -30,9 +31,31 @@ class ApiProcessing:
         # Logic for processing
         return "api processing"
     
-    def process_who_api(self, country_id):
+    def process_oaq_loc_api(self, lat, long, radius):
+        location_query = f"https://api.openaq.org/v3/locations?coordinates={lat}%2C%20{long}&radius={radius}&limit=100&page=1&order_by=id&sort_order=asc"
+        
+        headers = {'X-API-Key': OPEN_AQ_API_KEY}
+        get_location = requests.get(location_query, headers=headers).json()
+
+        sensor_info = {}
+        for sensor in get_location['results']:
+            id = sensor['id']
+            lat = sensor['coordinates']['latitude']
+            long = sensor['coordinates']['longitude']
+            sensor_daily_query =f"https://api.openaq.org/v3/sensors/{id}/measurements/daily?limit=100&page=1"
+            get_sensor_data = requests.get(sensor_daily_query, headers=headers).json()
+
+            for data in get_sensor_data['results']:
+                if data['parameter']['id'] == 2:
+                    data['summary']['lat'] = lat
+                    data['summary']['long'] = long
+                    sensor_info[id] = data['summary']
+
+        return sensor_info
+    
+    def process_oaq_api(self, country_id):
         # Logic for processing
-        return "api processing"
+        return country_id
 
     def process_nasa_api(self, country_id):
         today = datetime.today().strftime('%Y-%m-%d')
@@ -59,9 +82,6 @@ class ApiProcessing:
                 fire_count += 1
                 lat = float(row["latitude"])
                 lon = float(row["longitude"])
-
-                
-
                 total_frp += float(row["frp"])
                 total_brightness += float(row["bright_ti5"])
                 daycount += 1 if row["daynight"] == "D" else 0
@@ -71,8 +91,6 @@ class ApiProcessing:
                 fire_data.append({
                     "latitude": lat,
                     "longitude": lon,
-                    "brightness": float(row["bright_ti5"]),
-                    "acq_date": row["acq_date"]
                 })
 
             # Calculate statistics
@@ -97,7 +115,7 @@ class ApiProcessing:
 def main():
     api_processor = ApiProcessing()
     country = api_processor.get_country("USA")
-    location = api_processor.get_current_location(40.7128, -74.0060)
+    location = api_processor.process_oaq_loc_api(40.7128, -74.0060, 25000)
     print(f"Country: {country}")
     print(f"Location: {location}")
 

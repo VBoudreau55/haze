@@ -1,6 +1,6 @@
 import { useAuth } from "react-oidc-context";
 import { Box, Button, Typography, Card, CardContent } from '@mui/material';
-import GlobeComp from '../charts/Globe';
+import GlobeComp from '../components/Globe';
 
 function Landing() {
     const auth = useAuth();
@@ -28,11 +28,9 @@ function Landing() {
             alignItems: 'center',
             justifyContent: 'center',
             minHeight: 'calc(100vh - 64px)', // Assuming the navbar height is 64px
-            background: 'url(https://echarts.apache.org/examples/data-gl/asset/world.topo.bathy.200401.jpg) no-repeat center center',
             backgroundSize: 'cover',
           }}
         >
-          <GlobeComp /> {/* The 3D Globe component as background */}
           <Card sx={{ maxWidth: 400, position: 'absolute', zIndex: 2, padding: 3 }}>
             <CardContent>
               <Typography variant="h5" align="center" gutterBottom>

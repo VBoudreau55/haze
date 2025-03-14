@@ -16,7 +16,9 @@
     "@fontsource/roboto": "^5.2.5",
     "@mui/icons-material": "^6.4.7",
     "@mui/material": "^6.4.7",
+    "@mui/x-charts": "^7.27.1",
     "@types/echarts": "^4.9.22",
+    "@vis.gl/react-google-maps": "^1.5.2",
     "aws-amplify": "^6.6.6",
     "axios": "^1.8.3",
     "echarts": "^5.6.0",
@@ -28,7 +30,8 @@
     "react-globe.gl": "^2.33.1",
     "react-oidc-context": "^3.2.0",
     "react-router-dom": "^7.3.0",
-    "three": "^0.174.0"
+    "three": "^0.174.0",
+    "types": "file:@mui/x-charts"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.5.0",
