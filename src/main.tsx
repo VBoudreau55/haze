@@ -4,6 +4,8 @@ import App from "./App.tsx";
 import "./styles/index.css";
 import { Amplify } from "aws-amplify";
 import { AuthProvider } from "react-oidc-context";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import theme from "./styles/theme";
 
 const cognitoAuthConfig = {
   authority: "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_ZakuADvHR",
@@ -15,8 +17,11 @@ const cognitoAuthConfig = {
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <AuthProvider {...cognitoAuthConfig}>
-      <App />
-    </AuthProvider>
+    <ThemeProvider theme={theme}>
+    <CssBaseline />
+      <AuthProvider {...cognitoAuthConfig}>
+        <App />
+      </AuthProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );
