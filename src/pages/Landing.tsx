@@ -12,13 +12,6 @@ function Landing() {
     return <div>Encountering error... {auth.error.message}</div>;
     }
 
-    const signOutRedirect = () => {
-    const clientId = "78e46q6f25uu1gahoqbjilqt9c";
-    const logoutUri = "<logout uri>";
-    const cognitoDomain = "https://us-east-1zakuadvhr.auth.us-east-1.amazoncognito.com";
-    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
-    };
-
     return (
       <Box
       sx={{
@@ -92,19 +85,6 @@ function Landing() {
                 onClick={() => auth.signinRedirect()}
                 >
                 Sign In
-                </Button>
-                <Button
-                variant="outlined"
-                color="secondary"
-                fullWidth
-                sx={{
-                  color: '#D84315',
-                  borderColor: '#D84315',
-                  ':hover': { borderColor: '#BF360C', color: '#BF360C' },
-                }}
-                onClick={() => signOutRedirect()}
-                >
-                Sign Out (Redirect)
                 </Button>
             </Box>
           )}

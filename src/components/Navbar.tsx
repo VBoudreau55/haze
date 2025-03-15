@@ -24,6 +24,13 @@ function Navbar() {
     setAnchorElNav(null);
   };
 
+  const signOutRedirect = () => {
+    const clientId = "78e46q6f25uu1gahoqbjilqt9c";
+    const logoutUri = "<logout uri>";
+    const cognitoDomain = "https://us-east-1zakuadvhr.auth.us-east-1.amazoncognito.com";
+    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -114,7 +121,13 @@ function Navbar() {
                 {page}
               </Button>
               ))}
+                <Button
+                onClick={() => signOutRedirect()}
+                >
+                Sign Out
+                </Button>
             </Box>
+
         </Toolbar>
       </Container>
     </AppBar>
