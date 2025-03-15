@@ -98,27 +98,43 @@ const SensorMarker: React.FC<{ data: any }> = ({ data }: { data: any }) => {
     </Marker>;
 };
 
+const RecenterMap: React.FC<{ center: Coordinates }> = ({ center }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (center) {
+      map.setView(center, map.getZoom(), { animate: true }); 
+    }
+  }, [center, map]); 
+
+  return null; 
+};
+
+
 const Globe: React.FC<{ 
   onCenterChange: (coords: Coordinates) => void,
   sensorMarkers: any[],
   fireMarkers: any[],
-  loading: boolean
-}> = ({ onCenterChange, sensorMarkers, fireMarkers, loading }: { 
+  loading: boolean,
+  newCenter: Coordinates | null
+}> = ({ onCenterChange, sensorMarkers, fireMarkers, loading, newCenter }: { 
   onCenterChange: (coords: Coordinates) => void,
   sensorMarkers: any[],
   fireMarkers: any[],
-  loading: boolean
+  loading: boolean,
+  newCenter: Coordinates | null
 }) => {
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
   const [, setCenterCoords] = useState<Coordinates | null>(null);
 
   return (
-    <MapContainer center={userLocation || [34.052235, -118.243683]} zoom={5} style={{ height: "50vh", width: "100vh" }}>
+    <MapContainer center={userLocation || [34.052235, -118.243683]} zoom={30} style={{ height: "50vh", width: "100vh" }}>
       <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <MapEventHandler onCenterChange={onCenterChange} setCenterCoords={setCenterCoords} />
+      {newCenter && <RecenterMap center={newCenter} />}
       {userLocation && (
       <Marker position={userLocation} icon={customIcon}>
         <Popup>You are here!</Popup>

@@ -63,31 +63,19 @@ function Landing() {
         Find Wildfires & Monitor Air Quality
           </Typography>
           <Typography variant="body1" align="center" sx={{ mb: 2, color: 'white' }}>
-        Stay informed about nearby wildfires and PNM sensors to ensure the air is safe.
+        Stay informed about nearby active wildfires and local particulate matter sensors to ensure the air near you is safe.
           </Typography>
         
           {auth.isAuthenticated ? (
         <Box>
-          <Typography variant="body2" >
-            Hello: {auth.user?.profile.email}
-          </Typography>
-          <Typography variant="body2" >
-            ID Token: {auth.user?.id_token}
-          </Typography>
-          <Typography variant="body2" >
-            Access Token: {auth.user?.access_token}
-          </Typography>
-          <Typography variant="body2" >
-            Refresh Token: {auth.user?.refresh_token}
-          </Typography>
                 <Button
                 variant="contained"
                 color="error"
                 fullWidth
                 sx={{ mt: 3, bgcolor: '#BF360C', ':hover': { bgcolor: '#8D2C0A' } }}
-                onClick={() => auth.signoutRedirect()}
+                onClick={() => window.location.href = '/home'}
                 >
-                Sign Out
+                Let's Go!
                 </Button>
             </Box>
           ) : (

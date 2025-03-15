@@ -11,6 +11,7 @@ const About = () => {
         height: '100%',
         position: 'relative',
         flexDirection: 'column',
+        background: 'linear-gradient(to bottom, rgb(80, 0, 0), rgb(20, 0, 0), rgb(0, 0, 0))',
         justifyContent: 'center',
         alignItems: 'center',
         padding: {
@@ -83,7 +84,7 @@ const About = () => {
             textAlign="center"
             sx={{ mt: 2 }}
           >
-            This project was used as a learning experience for the development for me to study up on React and TypeScript. As well as use AWS products such as Amplify, Cognito, lambda, apigateways, and dynamodb.
+            This project was used as a as an example of a an application that uses AWS products such as Amplify, Cognito, lambda, apigateways, and dynamodb.
           </Typography>
 
           <Typography
