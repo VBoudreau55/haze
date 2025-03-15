@@ -4,12 +4,15 @@ import { checkServiceStatus, getLocationData, getCountryInfo } from "../services
 import FirePieChart from "../components/FirePieChart";
 import Globe from "../components/Globe";
 import FireGaugeChart from "../components/FireGuageChart";
+import DataTable from "../components/countrySensorTable";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [serviceStatus, setServiceStatus] = useState<string | null>(null);
   const [centerCoords, setCenterCoords] = useState<number[] | null>([37.908743881324625, -121.58020019531251]);
   const [calculationCoords, setCalculationCoords] = useState<number[] | null>(null);
+  const [countrySensorData, setCountrySensorData] = useState<any | null>(null);
+  const [countryName, setCountryName] = useState<string | null>(null);
 
   const [locationData, setLocationData] = useState<any | null>(() => {
     const savedLocationData = localStorage.getItem("locationData");
@@ -122,11 +125,13 @@ const Home = () => {
       sensors.push(value);
     }
     setAqsensorsMarkers(sensors);
+    setCountrySensorData(countryData['oaq']['results'][0]['parameters']);
+    setCountryName(countryData['oaq']['results'][0]['name']);
     setIsLoading(false);
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", padding: 3 }}>
+    <Box sx={{ height: '100%' ,display: "flex", flexDirection: "column", alignItems: "center", padding: 3 }}>
 
       {serviceStatus ? (
         <>
@@ -134,15 +139,30 @@ const Home = () => {
                   Dashboard
                 </Typography>
 
-                <Box sx={{ width: "100%", maxWidth: 900, marginBottom: 3 }}>
-                  <Button sx={{ width: "100%", height: "10%", maxWidth: 900, marginBottom: 3 }} variant="contained" color="primary" onClick={handleCenterCalculation}>
-                    <Typography fontWeight="bold" textAlign="center" sx={{ mb: 3 }} align="center">
-                      Get Data for Current Location
-                    </Typography>
-                  </Button>
+                <Box sx={{ width: "100%", maxWidth: 900, marginBottom: 3, alignItems: "center", justifyContent: "center", display: "flex", flexDirection: "column" }}>
+                <Button
+                      sx={{
+                        width: '50%',
+                        height: '10%',
+                        maxWidth: 900,
+                        marginBottom: 3,
+                        backgroundColor: '#FF5722', // Red-orange button background
+                        '&:hover': {
+                          backgroundColor: '#D84315', // Darker red-orange on hover
+                        },
+                        borderRadius: 2, // Rounded corners for the button
+                      }}
+                      variant="contained"
+                      color="primary"
+                      onClick={handleCenterCalculation}
+                    >
+                      <Typography fontWeight="bold" textAlign="center" sx={{ mb: 3 }} align="center">
+                        Get Data for Current Location
+                      </Typography>
+                    </Button>
                   <Globe onCenterChange={handleCenterChange} sensorMarkers={aqsensorsMarkers} fireMarkers={fireMarkers} loading={isLoading}/>
                   {centerCoords && (
-                    <Box sx={{ mt: 2, p: 2, border: '1px solid', borderColor: 'grey.400', borderRadius: 1 }}>
+                    <Box sx={{ mt: 2, p: 2, border: '1px solid', borderColor: 'grey.400', borderRadius: 1, backgroundColor: 'rgba(36, 36, 36, 0.9)',}}>
                       <Typography variant="h6" fontWeight="bold">Center Coordinates</Typography>
                       <Typography>Latitude: {centerCoords[0]}</Typography>
                       <Typography>Longitude: {centerCoords[1]}</Typography>
@@ -151,11 +171,14 @@ const Home = () => {
                 </Box>
         {isLoading ? <CircularProgress /> : (
           <>
-            <Box sx={{ width: "100%", maxWidth: 900, marginBottom: 3 }}>
-              <FirePieChart fireDayData={fireDayData} loading={isLoading}/>
+            <Box sx={{ width: "100%", maxWidth: 900, marginBottom: 3, backgroundColor: 'rgba(36, 36, 36, 0.9)', }}>
+              <FirePieChart fireDayData={fireDayData} loading={isLoading} />
             </Box>
-            <Box sx={{ width: "100%", maxWidth: 900, marginBottom: 3, height: 300 }}>
-              <FireGaugeChart fireStats={fireStats} loading={isLoading}/>
+            <Box sx={{ width: "100%", maxWidth: 900, marginBottom: 3, height: 300, backgroundColor: 'rgba(36, 36, 36, 0.9)', }}>
+              <FireGaugeChart fireStats={fireStats} loading={isLoading} countryName={countryName ?? ''}/>
+            </Box>
+            <Box sx={{ width: "100%", maxWidth: 900, marginBottom: 3, height: 300, backgroundColor: 'rgba(36, 36, 36, 0.9)', }}>
+              <DataTable data={countrySensorData} loading={isLoading} countryName={countryName ?? ''}/>
             </Box>
           </>
         )}

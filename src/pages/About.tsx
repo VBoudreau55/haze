@@ -8,7 +8,7 @@ const About = () => {
     <Box
       sx={{
         display: 'flex',
-        height: '100vh',
+        height: '100%',
         position: 'relative',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -51,7 +51,7 @@ const About = () => {
               }
             }}
           >
-            About Us
+            About This Project
           </Typography>
 
           <Typography
@@ -59,7 +59,7 @@ const About = () => {
             textAlign="center"
             sx={{ mt: 2 }}
           >
-            Welcome to <Typography component="span" fontWeight="bold">Lorem Ipsum</Typography>!
+            Welcome to <Typography component="span" fontWeight="bold">Haze</Typography>!
           </Typography>
 
           <Typography
@@ -67,7 +67,7 @@ const About = () => {
             textAlign="center"
             sx={{ mt: 2 }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia est at justo cursus, sed cursus magna viverra. Proin pharetra mollis odio, sed feugiat risus euismod sed. Sed ut nulla nulla.
+            This project was created to help users track air quality sensors and fire data around the world. Users can view the data on a map and see the current air quality sensor and fire data in their area.
           </Typography>
 
           <Typography
@@ -83,7 +83,7 @@ const About = () => {
             textAlign="center"
             sx={{ mt: 2 }}
           >
-            Fusce euismod nunc sed purus lacinia, ac hendrerit tortor aliquam. Suspendisse potenti. Aenean sit amet ipsum nec purus feugiat aliquam. Nullam euismod neque vitae lectus auctor, ac scelerisque libero tincidunt.
+            This project was used as a learning experience for the development for me to study up on React and TypeScript. As well as use AWS products such as Amplify, Cognito, lambda, apigateways, and dynamodb.
           </Typography>
 
           <Typography
@@ -92,27 +92,16 @@ const About = () => {
             sx={{ mt: 2 }}
           >
             <Typography component="span" fontWeight="bold">Development Team:</Typography>
+            
+          </Typography>
+          <Typography
+            variant="body1"
+            textAlign="center"
+            sx={{ mt: 2 }}
+          >
+            Vance Boudreau
           </Typography>
 
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <List
-              sx={{
-                display: 'flex',
-                flexDirection: isMobile ? 'column' : 'row',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                gap: 1,
-                padding: 1
-              }}
-            >
-              <ListItem sx={{ justifyContent: 'center' }}>John Doe</ListItem>
-              <ListItem sx={{ justifyContent: 'center' }}>Jane Smith</ListItem>
-            </List>
-          </Box>
         </CardContent>
       </Card>
     </Box>

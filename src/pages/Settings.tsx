@@ -15,7 +15,7 @@ const Settings = () => {
           sm: 3,
           md: 4
         },
-        height: '100vh',
+        height: '100%',
         justifyContent: 'flex-start',
       }}
     >
@@ -100,6 +100,11 @@ const Settings = () => {
         >
           Save Settings
         </Button>
+      </Box>
+
+      {/* Save Button */}
+      <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: 2, color: 'lightcoral' }}>
+        * These settings are not real and do not save *
       </Box>
     </Box>
   );

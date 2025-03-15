@@ -11,9 +11,11 @@ function App() {
   const auth = useAuth();
   auth.isAuthenticated = true; // For testing purposes TODO: Remove this line
   return (
-    <Router>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <Navbar />
-      <Routes>
+      <div style={{ flex: 1 }}>
+      <Router>
+        <Routes>
         <Route
           path="/"
           element={<Landing />}
@@ -21,8 +23,10 @@ function App() {
         <Route path="/home" element={auth.isAuthenticated ? <Home /> : <Navigate to="/" />} />
         <Route path="/about" element={<About />} />
         <Route path="/settings" element={auth.isAuthenticated ? <Settings /> : <Navigate to="/" />} />
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+      </div>
+    </div>
   );
 }
 
