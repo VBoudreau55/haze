@@ -84,6 +84,15 @@ const About = () => {
           >
             This project was used as a as an example of a an application that uses AWS products such as Amplify, Cognito, lambda, apigateways, and dynamodb.
           </Typography>
+          <Typography
+            variant="body1"
+            textAlign="center"
+            sx={{ mt: 2 }}
+          >
+            Data is collected from the NASA API and the OpenAQ API.
+            https://firms.modaps.eosdis.nasa.gov/api/
+            https://api.openaq.org/
+          </Typography>
 
           <Typography
             variant="body1"
