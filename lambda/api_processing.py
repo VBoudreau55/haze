@@ -18,13 +18,11 @@ class ApiProcessing:
         return "api processing"
 
     def get_country(self, country_id):
-        country = pycountry.countries.get(alpha_3=country_id)
-        openaq_code = country.alpha_2
+        country = pycountry.countries.get(alpha_2=country_id)
+        alpha3_id = country.alpha_3
         output = {}
-        output['oaq'] = self.process_oaq_api(openaq_code)
-        #output['nasa'] = self.process_nasa_api(country_id)
-
-        # Logic for processing
+        #output['oaq'] = self.process_oaq_api(country_id)
+        output['nasa'] = self.process_nasa_api(alpha3_id)
         return output
     
     def get_current_location(self, lat, long, radius=25000):
@@ -49,17 +47,21 @@ class ApiProcessing:
             get_sensor_data = requests.get(sensor_daily_query, headers=headers).json()
 
             for data in get_sensor_data['results']:
-                if data['parameter']['id'] == 2:
-                    data['summary']['lat'] = lat
-                    data['summary']['long'] = long
-                    sensor_info[id] = data['summary']
+                data['summary']['lat'] = lat
+                data['summary']['long'] = long
+                sensor_info[id] = data['summary']
 
         return sensor_info
     
-    def process_oaq_api(self):
-        
+    def process_oaq_api(self, openaq_code):
+        dynamodb_country_table = dynamodb.Table('oaq_country')
+        response = dynamodb_country_table.get_item(Key={'id': openaq_code})
+        oaq_id = response["Item"].get("oaq_id")
+        country_query = f"https://api.openaq.org/v3/countries/{oaq_id}"
+        headers = {'X-API-Key': OPEN_AQ_API_KEY}
+        get_country = requests.get(country_query, headers=headers).json()
 
-        return countries
+        return get_country
 
     def process_nasa_api(self, country_id):
         today = datetime.today().strftime('%Y-%m-%d')
@@ -95,6 +97,8 @@ class ApiProcessing:
                 fire_data.append({
                     "latitude": lat,
                     "longitude": lon,
+                    "brightness": float(row["bright_ti5"]),
+                    "frp": float(row["frp"]),
                 })
 
             # Calculate statistics
@@ -118,11 +122,11 @@ class ApiProcessing:
 
 def main():
     api_processor = ApiProcessing()
-    #country = api_processor.get_country("USA")
-    #location = api_processor.get_current_location(29.644810, -82.347687)
-    countries = api_processor.process_oaq_api()
-    print(countries)
-    #print(f"Country: {country}")
+    country = api_processor.get_country("US")
+    #location = api_processor.get_current_location( 37.908743881324625, -121.58020019531251)
+    #countries = api_processor.process_oaq_api()
+    #print(countries)
+    print(f"Country: {country}")
     #print(f"Location: {location}")
 
 if __name__ == "__main__":
