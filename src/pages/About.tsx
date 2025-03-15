@@ -90,7 +90,21 @@ const About = () => {
             sx={{ mt: 2 }}
           >
             Data is collected from the NASA API and the OpenAQ API.
+          </Typography>
+
+          <Typography
+            variant="body1"
+            textAlign="center"
+            sx={{ mt: 2 }}
+          >
             https://firms.modaps.eosdis.nasa.gov/api/
+          </Typography>
+
+          <Typography
+            variant="body1"
+            textAlign="center"
+            sx={{ mt: 2 }}
+          >
             https://api.openaq.org/
           </Typography>
 
