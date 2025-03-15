@@ -51,7 +51,7 @@ const Landing: React.FC<LandingProps> = ({ isAuth, handleSignIn }) => {
               color="error"
               fullWidth
               sx={{ mt: 3, bgcolor: '#BF360C', ':hover': { bgcolor: '#8D2C0A' } }}
-              onClick={() => window.location.href = '/home'}
+              onClick={() => window.location.href = '/Home'}
             >
               Let's Go!
             </Button>
