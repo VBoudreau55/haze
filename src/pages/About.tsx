@@ -1,8 +1,6 @@
-import { Box, Card, CardContent, Typography, List, ListItem, useTheme, useMediaQuery } from '@mui/material';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 
 const About = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Box
