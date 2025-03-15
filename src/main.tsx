@@ -9,18 +9,18 @@ import theme from "./styles/theme";
 const cognitoAuthConfig = {
   authority: "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_ZakuADvHR",
   client_id: "78e46q6f25uu1gahoqbjilqt9c",
-  redirect_uri: "https://main.d1sdgkd4wd9p19.amplifyapp.com/",
+  redirect_uri: "http://localhost:5173/",
   response_type: "code",
   scope: "email openid phone",
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-    <CssBaseline />
       <AuthProvider {...cognitoAuthConfig}>
+      <ThemeProvider theme={theme}>
+      <CssBaseline />
         <App />
+        </ThemeProvider>
       </AuthProvider>
-    </ThemeProvider>
   </React.StrictMode>
 );

@@ -10,10 +10,11 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import LocalFireDepartmentSharpIcon from '@mui/icons-material/LocalFireDepartmentSharp';
+import { useAuth } from "react-oidc-context";
 
 const pages = ['Home', 'About', 'Settings'];
 
-function Navbar() {
+function Navbar({handleLogout} : {handleLogout: () => void}) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -22,13 +23,6 @@ function Navbar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const signOutRedirect = () => {
-    const clientId = "78e46q6f25uu1gahoqbjilqt9c";
-    const logoutUri = "<logout uri>";
-    const cognitoDomain = "https://us-east-1zakuadvhr.auth.us-east-1.amazoncognito.com";
-    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
   };
 
   return (
@@ -122,7 +116,7 @@ function Navbar() {
               </Button>
               ))}
                 <Button
-                onClick={() => signOutRedirect()}
+                onClick={() => handleLogout()}
                 >
                 Sign Out
                 </Button>

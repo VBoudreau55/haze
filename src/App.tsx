@@ -9,25 +9,48 @@ import Settings from "./pages/Settings";
 
 function App() {
   const auth = useAuth();
-  auth.isAuthenticated = true; // For testing purposes TODO: Remove this line
+
+  const handleLogout = async () => {
+    // Remove the user from local session
+    await auth.removeUser();
+    
+    // Then redirect to Cognito’s logout endpoint
+    const clientId = "78e46q6f25uu1gahoqbjilqt9c";
+    const logoutUri = "http://localhost:5173/";
+    const cognitoDomain = "https://us-east-1zakuadvhr.auth.us-east-1.amazoncognito.com";
+    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
+  };
+
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <Navbar />
+      <Navbar handleLogout={handleLogout} />
       <div style={{ flex: 1 }}>
-      <Router>
-        <Routes>
-        <Route
-          path="/"
-          element={<Landing />}
-        />
-        <Route path="/home" element={auth.isAuthenticated ? <Home /> : <Navigate to="/" />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/settings" element={auth.isAuthenticated ? <Settings /> : <Navigate to="/" />} />
-        </Routes>
-      </Router>
+        {auth.isLoading ? (
+          <div>Loading authentication...</div>
+        ) : (
+          <Router>
+            <Routes>
+              <Route
+                path="/"
+                element={<Landing isAuth={auth.isAuthenticated} handleSignIn={auth.signinRedirect} />}
+              />
+              <Route
+                path="/home"
+                element={auth.isAuthenticated ? <Home /> : <Navigate to="/" />}
+              />
+              <Route path="/about" element={<About />} />
+              <Route
+                path="/settings"
+                element={auth.isAuthenticated ? <Settings /> : <Navigate to="/" />}
+              />
+            </Routes>
+          </Router>
+        )}
       </div>
     </div>
   );
+  
 }
 
 export default App;
