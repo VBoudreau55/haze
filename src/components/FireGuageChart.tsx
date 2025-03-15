@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Gauge } from "@mui/x-charts/Gauge";
 import { Box, Typography, CircularProgress } from "@mui/material";
 

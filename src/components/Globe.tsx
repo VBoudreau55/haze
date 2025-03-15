@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, useMap, Popup } from "react-leaflet";
 import Typography from '@mui/material/Typography';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import flameIcon from '../assets/fire-icon-png-25.jpg';
 
 // Define the type for coordinates
 type Coordinates = [number, number];
@@ -111,7 +110,7 @@ const Globe: React.FC<{
   loading: boolean
 }) => {
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
-  const [centerCoords, setCenterCoords] = useState<Coordinates | null>(null);
+  const [, setCenterCoords] = useState<Coordinates | null>(null);
 
   return (
     <MapContainer center={userLocation || [34.052235, -118.243683]} zoom={5} style={{ height: "50vh", width: "100vh" }}>

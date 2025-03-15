@@ -1,6 +1,5 @@
 import { useAuth } from "react-oidc-context";
 import { Box, Button, Typography, Card, CardContent } from '@mui/material';
-import GlobeComp from '../components/Globe';
 
 function Landing() {
     const auth = useAuth();

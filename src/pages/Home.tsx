@@ -1,21 +1,15 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Typography, useTheme, CircularProgress } from "@mui/material";
+import { Box, Button, Typography, CircularProgress } from "@mui/material";
 import { checkServiceStatus, getLocationData, getCountryInfo } from "../services/apiService";
 import FirePieChart from "../components/FirePieChart";
 import Globe from "../components/Globe";
 import FireGaugeChart from "../components/FireGuageChart";
 
-type Coordinates = {
-  lat: number;
-  lng: number;
-};
-
 const Home = () => {
-  const theme = useTheme();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [serviceStatus, setServiceStatus] = useState<string | null>(null);
-  const [centerCoords, setCenterCoords] = useState<Coordinates | null>([37.908743881324625, -121.58020019531251]);
-  const [calculationCoords, setCalculationCoords] = useState<Coordinates | null>(null);
+  const [centerCoords, setCenterCoords] = useState<number[] | null>([37.908743881324625, -121.58020019531251]);
+  const [calculationCoords, setCalculationCoords] = useState<number[] | null>(null);
 
   const [locationData, setLocationData] = useState<any | null>(() => {
     const savedLocationData = localStorage.getItem("locationData");
@@ -55,9 +49,6 @@ const Home = () => {
     setCalculationCoords(centerCoords);
   };
 
-  const linegraphxAxisData: any = []; 
-  const linegraphseriesData: any = []; 
-
   useEffect(() => {
     setIsLoading(true);
     const fetchServiceStatus = async () => {
@@ -96,6 +87,7 @@ const Home = () => {
   
   const fetchLocationData = async () => {
     console.log(centerCoords);
+    if (!centerCoords) return;
     const response = await fetch(
       `https://nominatim.openstreetmap.org/reverse?lat=${centerCoords[0]}&lon=${centerCoords[1]}&format=json`
     );

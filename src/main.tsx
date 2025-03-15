@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./styles/index.css";
-import { Amplify } from "aws-amplify";
 import { AuthProvider } from "react-oidc-context";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import theme from "./styles/theme";
