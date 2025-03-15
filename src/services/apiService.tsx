@@ -46,6 +46,15 @@ export const getCountryInfo = async (countryid: string): Promise<ApiResponse<Use
     }
   };
 
+export const getLocationData = async (lat: number, long: number): Promise<ApiResponse<User>> => {
+  try {
+    const response: any = await axiosInstance.get(`/location?lat=${lat}&long=${long}`);
+    return response.data; 
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
 export const getUser = async (userId: string): Promise<ApiResponse<User>> => {
   try {
     const response: any = await axiosInstance.get(`/user?user_id=${userId}`);

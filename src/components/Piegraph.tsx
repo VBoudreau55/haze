@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
 
-const ProductChart: React.FC = () => {
+const Piegraph: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -32,4 +32,4 @@ const ProductChart: React.FC = () => {
   );
 };
 
-export default ProductChart;
+export default Piegraph;

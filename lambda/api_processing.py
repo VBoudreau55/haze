@@ -27,11 +27,14 @@ class ApiProcessing:
         # Logic for processing
         return output
     
-    def get_current_location(self, lat, long):
-        # Logic for processing
-        return "api processing"
+    def get_current_location(self, lat, long, radius=25000):
+        output = {}
+        output['oaq'] = self.process_oaq_loc_api(lat, long, radius)
+        return output
+    
     
     def process_oaq_loc_api(self, lat, long, radius):
+        print(radius)
         location_query = f"https://api.openaq.org/v3/locations?coordinates={lat}%2C%20{long}&radius={radius}&limit=100&page=1&order_by=id&sort_order=asc"
         
         headers = {'X-API-Key': OPEN_AQ_API_KEY}
@@ -53,9 +56,10 @@ class ApiProcessing:
 
         return sensor_info
     
-    def process_oaq_api(self, country_id):
-        # Logic for processing
-        return country_id
+    def process_oaq_api(self):
+        
+
+        return countries
 
     def process_nasa_api(self, country_id):
         today = datetime.today().strftime('%Y-%m-%d')
@@ -114,10 +118,12 @@ class ApiProcessing:
 
 def main():
     api_processor = ApiProcessing()
-    country = api_processor.get_country("USA")
-    location = api_processor.process_oaq_loc_api(40.7128, -74.0060, 25000)
-    print(f"Country: {country}")
-    print(f"Location: {location}")
+    #country = api_processor.get_country("USA")
+    #location = api_processor.get_current_location(29.644810, -82.347687)
+    countries = api_processor.process_oaq_api()
+    print(countries)
+    #print(f"Country: {country}")
+    #print(f"Location: {location}")
 
 if __name__ == "__main__":
     main()

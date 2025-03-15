@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Card, CardContent, Typography, List, ListItem, useTheme, useMediaQuery } from '@mui/material';
 
 const About = () => {
@@ -60,7 +59,7 @@ const About = () => {
             textAlign="center"
             sx={{ mt: 2 }}
           >
-            Welcome to <span style={{ fontWeight: 'bold' }}>Lorem Ipsum</span>!
+            Welcome to <Typography component="span" fontWeight="bold">Lorem Ipsum</Typography>!
           </Typography>
 
           <Typography
@@ -76,7 +75,7 @@ const About = () => {
             textAlign="center"
             sx={{ mt: 2 }}
           >
-            <span style={{ fontWeight: 'bold' }}>Our Mission:</span>
+            <Typography component="span" fontWeight="bold">Our Mission:</Typography>
           </Typography>
 
           <Typography
@@ -92,7 +91,7 @@ const About = () => {
             textAlign="center"
             sx={{ mt: 2 }}
           >
-            <span style={{ fontWeight: 'bold' }}>Development Team:</span>
+            <Typography component="span" fontWeight="bold">Development Team:</Typography>
           </Typography>
 
           <Box
