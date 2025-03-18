@@ -14,7 +14,7 @@ dynamodb_table = dynamodb.Table('user_info')
 root_path = '/api_processing'
 status_check_path = root_path + '/status'
 country_path = root_path + '/country'
-user_path = root_path + '/user'  # FIXED
+user_path = root_path + '/user' 
 
 def lambda_handler(event, context):
     try:

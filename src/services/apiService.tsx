@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = "https://hriblyler2.execute-api.us-east-1.amazonaws.com/default/api_processing"; // Replace with your API Gateway endpoint
+const API_URL = "https://hriblyler2.execute-api.us-east-1.amazonaws.com/default/api_processing";
 
 const axiosInstance = axios.create({
   baseURL: API_URL,

@@ -117,17 +117,4 @@ class ApiProcessing:
             return output
         except requests.RequestException as e:
             return f"Error: {e}"
-        
-
-
-def main():
-    api_processor = ApiProcessing()
-    country = api_processor.get_country("US")
-    #location = api_processor.get_current_location( 37.908743881324625, -121.58020019531251)
-    #countries = api_processor.process_oaq_api()
-    #print(countries)
-    print(f"Country: {country}")
-    #print(f"Location: {location}")
-
-if __name__ == "__main__":
-    main()
+    
