@@ -59,6 +59,7 @@ const Home = () => {
   const [fireStats, setFireStats] = useState<any | null>(null);
   const [fireMarkers, setfireMarkers] = useState<any | null>(null);
   const [aqsensorsMarkers, setAqsensorsMarkers] = useState<any | null>(null);
+  const [currentCountry, setCurrentCountry] = useState<string | null>(null);
 
   
 
@@ -77,7 +78,7 @@ const Home = () => {
       setServiceStatus(response.message ?? null);
       fetchFirstData();
       if (response.message === "Service is operational"){
-        await fetchLocationDataFirst();
+        await fetchLocationData();
       }
     };
     fetchServiceStatus();
@@ -105,23 +106,6 @@ const Home = () => {
   useEffect(() => {
     fetchLocationData();
   }, [calculationCoords]);
-  
-  const fetchLocationDataFirst = async () => {
-    console.log(centerCoords);
-    if (!centerCoords) return;
-    const response = await fetch(
-      `https://nominatim.openstreetmap.org/reverse?lat=${centerCoords[0]}&lon=${centerCoords[1]}&format=json`
-    );
-    const data = await response.json();
-    if (data.address && data.address.country_code) {
-      const country_code = data.address.country_code.toUpperCase(); // Country code (ISO 3166-1 alpha-2)
-      const country_response = await getCountryInfo(country_code);
-      setCountryData(country_response ?? null);
-    }
-    const location_response = await getLocationData(centerCoords[0], centerCoords[1]);
-    setLocationData(location_response ?? null);
-    handleDataCalculation();
-  };
 
   const fetchLocationData = async () => {
     setIsLoading(true);
@@ -132,8 +116,12 @@ const Home = () => {
     const data = await response.json();
     if (data.address && data.address.country_code) {
       const country_code = data.address.country_code.toUpperCase(); // Country code (ISO 3166-1 alpha-2)
-      const country_response = await getCountryInfo(country_code);
-      setCountryData(country_response ?? null);
+      // Check if country is the same country as the current country
+      if (country_code !== currentCountry){
+        setCurrentCountry(country_code);
+        const country_response = await getCountryInfo(country_code);
+        setCountryData(country_response ?? null);
+      }
     }
     const location_response = await getLocationData(centerCoords[0], centerCoords[1]);
     setLocationData(location_response ?? null);
